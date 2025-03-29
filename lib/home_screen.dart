@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_db/component/bottom_sheet.dart';
 import 'package:test_db/component/day_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,6 +17,21 @@ class HomeScreen extends StatelessWidget {
               DayCard(),
             ],
           ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) {
+              return BottomAddSheet();
+            },
+          );
+        },
+        backgroundColor: Colors.blueAccent,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
         ),
       ),
     );
