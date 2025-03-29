@@ -9,10 +9,11 @@ class BottomAddSheet extends StatefulWidget {
 }
 
 class _BottomAddSheetState extends State<BottomAddSheet> {
+  DateTime startTime = DateTime.now().toUtc();
+  DateTime endTime = DateTime.now().toUtc();
+
   @override
   Widget build(BuildContext context) {
-    DateTime startTime = DateTime.now().toUtc();
-
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -39,9 +40,9 @@ class _BottomAddSheetState extends State<BottomAddSheet> {
                                 height: 300,
                                 child: CupertinoDatePicker(
                                   mode: CupertinoDatePickerMode.dateAndTime,
-                                  onDateTimeChanged: (DateTime dateTime) {
+                                  onDateTimeChanged: (DateTime date) {
                                     setState(() {
-                                      startTime = dateTime.toUtc();
+                                      startTime = date;
                                       print(startTime);
                                     });
                                   },
@@ -52,16 +53,39 @@ class _BottomAddSheetState extends State<BottomAddSheet> {
                           });
                     },
                     child: Text(
-                        '${startTime.year}.${startTime.month}.${startTime.day}'),
+                        '${startTime.year}년 ${startTime.month}월 ${startTime.day}일 ${startTime.hour}시 ${startTime.minute}분'),
                   )),
 
                   ///끝나는 날짜
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Text('2025.03.15'),
-                    ),
-                  ),
+                      child: GestureDetector(
+                        onTap: () {
+                          showCupertinoDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (BuildContext context) {
+                                return Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    color: Colors.white,
+                                    height: 300,
+                                    child: CupertinoDatePicker(
+                                      mode: CupertinoDatePickerMode.dateAndTime,
+                                      onDateTimeChanged: (DateTime date) {
+                                        setState(() {
+                                          endTime = date;
+                                          print(endTime);
+                                        });
+                                      },
+                                      dateOrder: DatePickerDateOrder.ymd,
+                                    ),
+                                  ),
+                                );
+                              });
+                        },
+                        child: Text(
+                            '${endTime.year}년 ${endTime.month}월 ${endTime.day}일 ${endTime.hour}시 ${endTime.minute}분'),
+                      )),
                 ],
               ),
             ),
